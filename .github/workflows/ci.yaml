@@ -127,3 +127,38 @@ jobs:
       run: pdm build --no-sdist -v
       env:
         PROJECT_ROOT: ${{github.workspace}}
+
+
+  test-msys2:
+    needs: clone_vendors
+    strategy:
+      matrix:
+        sys: [MINGW64, UCRT64, CLANG64]
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Download parsers
+      uses: actions/download-artifact@v4
+      with:
+        name: language-parsers
+        path: parsers
+    - name: Setup MSYS2
+      uses: msys2/setup-msys2@v2
+      with:
+        msystem: ${{ matrix.sys }}
+        update: true
+        install: base-devel
+        pacboy: >-
+          # rust:p
+          python:p
+          python-pip:p
+          #${{ matrix.sys == 'CLANG64' && 'gcc-compat:p' || '' }}
+    - name: Install PDM
+      shell: msys2 {0}
+      run: pip install pdm
+    - name: Install Dependencies
+      shell: msys2 {0}
+      run: pdm install -v
+    - name: Run Tests
+      shell: msys2 {0}
+      run: pdm run test
