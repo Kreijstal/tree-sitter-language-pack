@@ -149,7 +149,6 @@ jobs:
         update: true
         install: base-devel
         pacboy: >-
-          # rust:p
           python:p
           python-pip:p
           #${{ matrix.sys == 'CLANG64' && 'gcc-compat:p' || '' }}
