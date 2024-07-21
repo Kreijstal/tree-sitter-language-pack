@@ -151,6 +151,13 @@ jobs:
         pacboy: >-
           python:p
           python-pip:p
+          python-msgpack:p
+          python-pygments:p
+          python-httpx:p
+          python-filelock:p
+          python-anyio:p
+          python-certifi:p
+          python-rich:p     
     - name: Install PDM
       shell: msys2 {0}
       run: pip install pdm
