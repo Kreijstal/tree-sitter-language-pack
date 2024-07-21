@@ -151,7 +151,6 @@ jobs:
         pacboy: >-
           python:p
           python-pip:p
-          #${{ matrix.sys == 'CLANG64' && 'gcc-compat:p' || '' }}
     - name: Install PDM
       shell: msys2 {0}
       run: pip install pdm
